@@ -1,0 +1,70 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "KeyVautsName": {
+            "value": "MyKeyVauntsTask4"
+        },
+        "accessPolicies": {
+            "value": [
+                {
+                    "objectId": "a10ce55d-dfb5-4433-a389-152b8614de8d",
+                    "tenantId": "b41b72d0-4e9f-4c26-8a69-f949f367c91d",
+                    "permissions": {
+                        "keys": [
+                            "All"
+                        ],
+                        "secrets": [
+                            "All"
+                        ],
+                        "certificates": [
+                            "All"
+                        ]
+                    }
+                },
+                {
+                    "objectId": "f3d19bd0-a5ee-4ff5-bd53-079f5878beaa",
+                    "tenantId": "b41b72d0-4e9f-4c26-8a69-f949f367c91d",
+                    "permissions": {
+                        "keys": [
+                            "All"
+                        ],
+                        "secrets": [
+                            "All"
+                        ],
+                        "certificates": [
+                            "All"
+                        ]
+                    },
+                    "applicationId": null
+                }
+            ]
+        },
+        "tenant": {
+            "value": "b41b72d0-4e9f-4c26-8a69-f949f367c91d"
+        },
+        "networkAcls": {
+            "value": {
+                "defaultAction": "Allow",
+                "bypass": "AzureServices",
+                "virtualNetworkRules": [],
+                "ipRules": []
+            }
+        },
+        "resourceName": {
+            "value": "Cluster1"
+        },
+        "dnsPrefix": {
+            "value": "Cluster1"
+        },
+        "agentCount": {
+            "value": 3
+        },
+        "workspaceName": {
+            "value": "DefaultWorkspace-5c2e7fc5-f38e-4743-b71d-26cff5b1b4fa-EJP"
+        },
+        "omsWorkspaceId": {
+            "value": "/subscriptions/5c2e7fc5-f38e-4743-b71d-26cff5b1b4fa/resourceGroups/DefaultResourceGroup-EJP/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-5c2e7fc5-f38e-4743-b71d-26cff5b1b4fa-EJP"
+        }
+    }
+}

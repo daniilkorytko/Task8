@@ -1,0 +1,155 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+
+
+        "KeyVautsName": {
+            "type": "string"
+        },
+        "sku": {
+            "type": "string",
+            "defaultValue": "Standard",
+            "allowedValues": [
+                "Standard",
+                "standard",
+                "Premium",
+                "premium"
+            ],
+            "metadata": {
+                "description": "SKU for the vault"
+            }
+        },
+        "accessPolicies": {
+            "type": "array",
+            "defaultValue": [],
+            "metadata": {
+                "description": "The access policies defined for this vault."
+            }
+        },
+        "tenant": {
+            "type": "string"
+        },
+        "enabledForDeployment": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "enabledForTemplateDeployment": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "enabledForDiskEncryption": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "networkAcls": {
+            "type": "object"
+        },
+        "resourceName": {
+            "type": "string"
+
+        },
+        "dnsPrefix": {
+            "type": "string"
+
+        },
+        "workspaceName": {
+            "type": "string"
+
+        },
+        "agentCount": {
+            "type": "int",
+            "defaultValue": 3
+
+        },
+        "servicePrincipalClientId": {
+            "type": "securestring"
+        },
+        "servicePrincipalClientSecret": {
+            "type": "securestring"
+        },
+        "omsWorkspaceId": {
+            "type": "string"
+
+        }
+    },
+    "variables": {
+        "location": "[resourceGroup().location]",
+        "secretName1": "[concat( parameters('KeyVautsName'), 'SecretName')]",
+
+        "secretsObject1": {
+
+            "secrets": [						
+                {
+                    "secretName": "[variables('secretName1')]",
+                    "secretValue": "[parameters('servicePrincipalClientSecret')]"
+                }
+            ]
+        }
+
+        
+
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "name": "linkedTemplateKeyVaunt",
+            "type": "Microsoft.Resources/deployments",
+           
+            
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"https://raw.githubusercontent.com/daniilkorytko/Task3.1/master/KeyVaunt.json",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                 "KeyVautsName":{"value": "[parameters('KeyVautsName')]"},
+                 "location":{"value": "[variables('location')]"},
+                 "sku":{"value": "[parameters('sku')]"},
+                 "accessPolicies":{"value": "[parameters('accessPolicies')]"},
+                 "tenant":{"value": "[parameters('tenant')]"},
+                 "enabledForDeployment":{"value": "[parameters('enabledForDeployment')]"},
+                 "enabledForTemplateDeployment":{"value": "[parameters('enabledForTemplateDeployment')]"},
+                 "enabledForDiskEncryption":{"value": "[parameters('enabledForDiskEncryption')]"},
+                 "networkAcls":{"value": "[parameters('networkAcls')]"},
+                 "secretsObject":{"value": "[variables('secretsObject1')]"}
+               }
+            }
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "linkedTemplateAKS",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+
+                "linkedTemplateKeyVaunt"
+            ],
+            
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"https://raw.githubusercontent.com/daniilkorytko/Task8/master/Task8.json",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                 "resourceName":{"value": "[parameters('resourceName')]"},
+                 "dnsPrefix":{"value": "[parameters('dnsPrefix')]"},
+                 "agentCount":{"value": "[parameters('agentCount')]"},
+                 "workspaceName":{"value": "[parameters('workspaceName')]"},
+                 "omsWorkspaceId":{"value": "[parameters('omsWorkspaceId')]"},
+                 "servicePrincipalClientId":{"value": "[parameters('servicePrincipalClientId')]"},
+                 "secret": {
+                    "reference":  {
+
+                       "keyVault":  {"id":  "[reference('linkedTemplateKeyVaunt').outputs.KeyVaunts.value]"},
+                       "secretName": "[variables('secretName1')]"
+                       
+                    }
+                  }
+               }
+            
+            }
+         }
+    ]
+}
