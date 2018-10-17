@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceName": {
+            "value": "Cluster1"
+        },
+        "dnsPrefix": {
+            "value": "Cluster1"
+        },
+        "agentCount": {
+            "value": 2
+        },
+        "workspaceName": {
+            "value": "DefaultWorkspace-5c2e7fc5-f38e-4743-b71d-26cff5b1b4fa-EJP"
+        },
+        "omsWorkspaceId": {
+            "value": "/subscriptions/5c2e7fc5-f38e-4743-b71d-26cff5b1b4fa/resourceGroups/DefaultResourceGroup-EJP/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-5c2e7fc5-f38e-4743-b71d-26cff5b1b4fa-EJP"
+        }
+    }
+}
