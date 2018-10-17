@@ -141,7 +141,7 @@
                     "Secret": {
                         "reference":  {
             
-                           "keyVault":  {"id": "resourceId( 'Microsoft.KeyVault/vaults', parameters('KeyVautsName'))"},
+                           "keyVault":  {"id": "[resourceId(resourceGroup().name ,'Microsoft.KeyVault/vaults', parameters('KeyVautsName'))]"},
                            "secretName": "[parameters('secretName')]"
                            
                         }
