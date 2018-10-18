@@ -52,10 +52,10 @@
             }
         },
         "resourceName": {
-            "value": "Cluster2"
+            "value": "Cluster15"
         },
         "dnsPrefix": {
-            "value": "Cluster2"
+            "value": "Cluster15"
         },
         "agentCount": {
             "value": 3
